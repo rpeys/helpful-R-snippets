@@ -1,0 +1,7 @@
+outcomes.list <- list("mortality_2yr") #used in defining genes, samples and plotting heatmaps; should be colname of design and one of the values of DEGenes_dt$outcome
+
+#filter examples
+DEGenes <- (DEGenes_dt %>% filter(outcome %in% outcomes.list))$GENE_ID
+samples_to_plot <- (design %>% filter(!is.na(!!! rlang::syms(outcomes.list))) %>% arrange(!!! rlang::syms(outcomes.list), `ISS score`))$sampleID #****** change based on outcome of interest
+samples_to_plot <- (design %>% filter(!is.na(!!! rlang::syms(outcomes.list)), `ISS score` %in% c(3, 1)) %>% arrange(!!! rlang::syms(outcomes.list)))$sampleID #****** change based on outcome of interest
+samples_to_plot <- (design %>% filter(!is.na(!!! rlang::syms(outcomes.list)), public_id %in% toupper(testing.pts)) %>% arrange(!!! rlang::syms(outcomes.list)))$sampleID #****** change based on outcome of interest
